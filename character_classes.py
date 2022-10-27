@@ -2,7 +2,6 @@ class Character:
 
     def __init__(self, type, name):
         self.data = []
-        self.yes_no = ""
         self.type = type 
         self.name = name
 
@@ -16,9 +15,6 @@ class Character:
             self.type = type
     def NameCharacter(self, name):
         self.name = name
-
-    def AskYesNoQuestion(self, yes_no):
-        self.yes_no = yes_no
     
 
 if __name__ == "__main__":
