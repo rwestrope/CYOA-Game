@@ -18,7 +18,7 @@ class Character:
         self.name = name
 
     def AskYesNoQuestion(self, yes_no):
-        self.yes_no
+        self.yes_no = yes_no
     
 
 if __name__ == "__main__":
