@@ -32,12 +32,12 @@ class Character:
 
     
     def CavalryTraining(self):
-            choice = input('Choose a number between one and four.\n')
+            choice = input('Choose a number between one and four.')
             success = random.randint(1,4)
             if success == choice:
                 print("Congratulations! You are now a member of the cavalry!")
                 self.specialty = 'Cavalry'
-            else:
+            elif success != choice:
                 print("You fell off your horse. Pick a different specialty.")
                 player.Warrior_Trainings.remove('Cavalry')
 
@@ -47,19 +47,20 @@ class Character:
             if success == choice:
                 print("Congratulations! You are now a member of the archery!")
                 self.specialty = 'Archer'
-            else:
-                print("You missed the target. Pick a different specialty.")
+            elif success != choice:
                 player.Warrior_Trainings.remove('Archer')
+                print("You missed the target. Pick a different specialty.")
+
 
     def SwordsmanTraining(self):
-            choice = input('Choose a number between one and ten.\n')
+            choice = int(input('Choose a number between one and ten.\n'))
             success = random.randint(1,10)
-            if success != choice:
+            if success != choice and choice >= 1 and choice <= 10:
                 print("Congratulations! You are now a member of the army!")
                 self.specialty = 'Swordsman'
-            else:
-                print("You dropped your sword. Pick a different specialty.")
-                player.Warrior_Trainings.remove('Warrior')
+            elif success == choice or choice < 1 or choice > 10:
+                print("You dropped your sword. Pick a different specialty.")               
+                player.Warrior_Trainings.remove('Swordsman')
     
 
 if __name__ == "__main__":
@@ -84,6 +85,14 @@ if __name__ == "__main__":
 
     if player.type == 'Warrior':
         while player.specialty == "":
+            if player.Warrior_Trainings == []:
+                print("It looks like the path of the warrior isn't for you.")
+                player.Character_Types.remove("Warrior")
+                print("Pick a different character.")
+                print("What type of character would you like to play as?")
+                print("Character Types:", Character.getcharactertypes())
+                player.ChangeCharacterType(input())
+
             print(f'What would you like to train as?')
             print("Training Options:", Character.getwarriortrainings())
             player.ChooseTraining(input(""))
@@ -96,6 +105,7 @@ if __name__ == "__main__":
             elif player.training == 'Swordsman':
                 player.SwordsmanTraining()
 
+            
     elif player.type == 'Farmer':
         print('')
 
