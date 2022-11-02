@@ -1,12 +1,12 @@
 import random
 class Character:
 
-    def __init__(self, type, name, training, specialty):
+    def __init__(self, type, name):
         self.data = []
         self.type = type 
         self.name = name
-        self.training = training
-        self.specialty = specialty
+        self.training = ""
+        self.specialty = ""
 
 
     Character_Types = ["Farmer","Hunter","Warrior"]
@@ -92,11 +92,11 @@ class Character:
                 player.Warrior_Trainings.remove('Swordsman')
                 self.FailedTraining()
     
-
+    
 if __name__ == "__main__":
     x=""
 
-    player = Character("","","","")
+    player = Character("","")
 
     print("What type of character would you like to play as?")
     print("Character Types:", Character.getcharactertypes())
