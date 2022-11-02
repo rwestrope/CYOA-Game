@@ -92,7 +92,7 @@ class Character:
                 player.Warrior_Trainings.remove('Swordsman')
                 self.FailedTraining()
     
-
+    
 if __name__ == "__main__":
     x=""
 
