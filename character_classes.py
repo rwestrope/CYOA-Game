@@ -38,6 +38,15 @@ class Character:
             training = input()
         self.training = training
 
+    def FailedTraining(self):
+        if player.Warrior_Trainings == []:
+            print("It looks like the path of the warrior isn't for you.")
+            player.Character_Types.remove("Warrior")
+            print("Pick a different character.")
+            print("What type of character would you like to play as?")
+            print("Character Types:", Character.getcharactertypes())
+            player.ChangeCharacterType(input())
+            player.specialty = "failed"
     
     def CavalryTraining(self):
             choice = input('Choose a number between one and four.\n')
@@ -48,9 +57,10 @@ class Character:
             if success == choice:
                 print("Congratulations! You are now a member of the cavalry!")
                 self.specialty = 'Cavalry'
-            else:
+            elif success != choice:
                 print("You fell off your horse. Pick a different specialty.")
                 player.Warrior_Trainings.remove('Cavalry')
+                self.FailedTraining()
 
     def ArcheryTraining(self):
             choice = input('Choose a number between one and two.\n')
@@ -61,22 +71,26 @@ class Character:
             if success == choice:
                 print("Congratulations! You are now a member of the archery!")
                 self.specialty = 'Archer'
-            else:
-                print("You missed the target. Pick a different specialty.")
+            elif success != choice:
                 player.Warrior_Trainings.remove('Archer')
+                print("You missed the target. Pick a different specialty.")
+                self.FailedTraining()
+
 
     def SwordsmanTraining(self):
+
             choice = input('Choose a number between one and ten.\n')
             while choice.isnumeric() == False:
                 print("Please select a number")
                 choice = input()
-            success = random.randint(1,10)
-            if success != choice:
+                success = random.randint(1,10)
+            if success != choice and choice >= 1 and choice <= 10:
                 print("Congratulations! You are now a member of the army!")
                 self.specialty = 'Swordsman'
-            else:
-                print("You dropped your sword. Pick a different specialty.")
-                player.Warrior_Trainings.remove('Warrior')
+            elif success == choice or choice < 1 or choice > 10:
+                print("You dropped your sword. Pick a different specialty.")               
+                player.Warrior_Trainings.remove('Swordsman')
+                self.FailedTraining()
     
 
 if __name__ == "__main__":
@@ -111,12 +125,13 @@ if __name__ == "__main__":
             
             elif player.training == 'Swordsman':
                 player.SwordsmanTraining()
+        
+            
+    if player.type == 'Farmer':
+        print('Now you are a farmer')
 
-    elif player.type == 'Farmer':
-        print('')
-
-    elif player.type == 'Hunter':
-        print('')
+    if player.type == 'Hunter':
+        print('Now you are a hunter')
 
 
 
