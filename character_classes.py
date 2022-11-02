@@ -27,6 +27,7 @@ class Character:
             print(Character.getcharactertypes())
             type=input()
         self.type = type
+
     def NameCharacter(self, name):
         self.name = name
 
@@ -35,7 +36,7 @@ class Character:
             print("Sorry please type in your selection like from the list given")
             print(Character.getwarriortrainings())
             training = input()
-        return training
+        self.training = training
 
     
     def CavalryTraining(self):
@@ -100,7 +101,8 @@ if __name__ == "__main__":
         while player.specialty == "":
             print("What would you like to train as?")
             print("Training Options:", Character.getwarriortrainings())
-            player.ChooseTraining(input())
+            player.ChooseTraining(input(""))
+            print(f'This is what training is set to: {player.training}')
             if player.training == 'Cavalry':
                 player.CavalryTraining()
 
