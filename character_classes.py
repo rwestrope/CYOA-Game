@@ -1,5 +1,4 @@
 import random
-
 class Character:
 
     def __init__(self, type, name, training, specialty):
@@ -10,7 +9,7 @@ class Character:
         self.specialty = specialty
 
 
-    Character_Types = {"Farmer","Hunter","Warrior"}
+    Character_Types = ["Farmer","Hunter","Warrior"]
 
     Warrior_Trainings = ["Cavalry","Archer","Swordsman"]
 
@@ -23,16 +22,28 @@ class Character:
         return cls.Warrior_Trainings
 
     def ChangeCharacterType(self, type):
-            self.type = type
+        while not type in Character.Character_Types:
+            print("Sorry please type in your selection like from the list given")
+            print(Character.getcharactertypes())
+            type=input()
+        self.type = type
+
     def NameCharacter(self, name):
         self.name = name
 
     def ChooseTraining(self, training):
+        while not training in Character.Warrior_Trainings:
+            print("Sorry please type in your selection like from the list given")
+            print(Character.getwarriortrainings())
+            training = input()
         self.training = training
 
     
     def CavalryTraining(self):
             choice = input('Choose a number between one and four.\n')
+            while choice.isnumeric() == False:
+                print("Please select a number")
+                choice = input()
             success = random.randint(1,4)
             if success == choice:
                 print("Congratulations! You are now a member of the cavalry!")
@@ -43,6 +54,9 @@ class Character:
 
     def ArcheryTraining(self):
             choice = input('Choose a number between one and two.\n')
+            while choice.isnumeric() == False:
+                print("Please select a number")
+                choice = input()
             success = random.randint(1,2)
             if success == choice:
                 print("Congratulations! You are now a member of the archery!")
@@ -53,6 +67,9 @@ class Character:
 
     def SwordsmanTraining(self):
             choice = input('Choose a number between one and ten.\n')
+            while choice.isnumeric() == False:
+                print("Please select a number")
+                choice = input()
             success = random.randint(1,10)
             if success != choice:
                 print("Congratulations! You are now a member of the army!")
@@ -71,22 +88,21 @@ if __name__ == "__main__":
     print("Character Types:", Character.getcharactertypes())
     player.ChangeCharacterType(input())
  
-    while not player.type in Character.Character_Types:
-        print("Sorry please type in your selection like from the list given")
-        print(Character.getcharactertypes())
-        player.type=input()
+    
     while x != "y":
         player.NameCharacter(input("What would you like your character's name to be\n"))
-        print(f"So your name is {player.name}?")
+        print(f"So your name is {player.name} then?")
         x=input("[y/n]\n")
+    x=""
 
     print(f"You have chosen to play as a {player.type} named {player.name}")
 
     if player.type == 'Warrior':
         while player.specialty == "":
-            print(f'What would you like to train as?')
+            print("What would you like to train as?")
             print("Training Options:", Character.getwarriortrainings())
             player.ChooseTraining(input(""))
+            print(f'This is what training is set to: {player.training}')
             if player.training == 'Cavalry':
                 player.CavalryTraining()
 
