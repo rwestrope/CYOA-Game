@@ -11,7 +11,7 @@ class Battle:
         self.selection = selection
         self.name = name
         self.xp = xp
-        self.speciaty = specialty
+        self.specialty = specialty
 
 
 
@@ -20,16 +20,16 @@ class Battle:
 
         global BattleFoe
 
-        Goomba = Battle(1, 5, 5, 1, "Goomba", "","")
-        FootSoldier = Battle(1, 10, 5, 2, "Foot Soldier", "","")
-        ArmoredSoldier = Battle(1, 20, 10, 3, "Armored Soldier", "","")
-        Archer = Battle(1, 30, 15, 4, "Archer", "","")
-        ExpertSoldier = Battle(1, 40, 20, 5, "Expert Soldier", "","")
-        Horseman = Battle(1, 80, 40, 6, "Horseman", "","")
-        Minotaur = Battle(1, 120, 70, 7, "Minotaur", "","")
-        Centaur = Battle(1, 150, 100, 8, "Centaur", "","")
-        Griffin = Battle(1, 180, 130, 9, "Griffin", "","")
-        Dragon = Battle(1, 250, 180, 10, "Dragon", "","")
+        Goomba = Battle(1, 5.0, 5, 1, "Goomba", "","")
+        FootSoldier = Battle(1, 10.0, 5, 2, "Foot Soldier", "","")
+        ArmoredSoldier = Battle(1, 20.0, 10, 3, "Armored Soldier", "","")
+        Archer = Battle(1, 30.0, 15, 4, "Archer", "","")
+        ExpertSoldier = Battle(1, 40.0, 20, 5, "Expert Soldier", "","")
+        Horseman = Battle(1, 80.0, 40, 6, "Horseman", "","")
+        Minotaur = Battle(1, 120.0, 70, 7, "Minotaur", "","")
+        Centaur = Battle(1, 150.0, 100, 8, "Centaur", "","")
+        Griffin = Battle(1, 180.0, 130, 9, "Griffin", "","")
+        Dragon = Battle(1, 250.0, 180, 10, "Dragon", "","")
 
         Opponent1 = random.randint(1,3)
         Opponent2 = random.randint(4,6)
@@ -63,12 +63,15 @@ class Battle:
 
     def CalculateDamage(self):
         global BattleFoe, player_damage_inflicted, foe_damage_inflicted
-        player_damage_inflicted = self.damage*round(random.uniform(0.75, 1.25), 2)
-        foe_damage_inflicted = BattleFoe.damage*round(random.uniform(0.75, 1.25), 2)
-        return player_damage_inflicted, foe_damage_inflicted
+        print(f'your original damage is:{self.damage}')
+        player_damage_inflicted = round(self.damage*random.uniform(0.75,1.25), 2)
+        foe_damage_inflicted = round(BattleFoe.damage*random.uniform(0.75,1.25), 2)
+        print( f'your modified damage is:{player_damage_inflicted}')
+        #return player_damage_inflicted, foe_damage_inflicted
 
     def SetNewHealth(self, damage):        
         self.health = self.health - damage
+        return self.health
 
     def GetHealth(self):
         return self.health
@@ -80,6 +83,7 @@ class Battle:
         self.xp = self.xp - self.xp*(0.1)
         print(f'Your current xp is: {self.xp}')
         self.HealthXP()
+        self.DamageXP()
         self.ResetHealth()
         self.ChooseEnemy()
 
@@ -122,6 +126,42 @@ class Battle:
             elif self.xp > 125:
                 self.base_health = 260
 
+    def DamageXP(self):
+        if self.specialty == 'Cavalry':
+            if self.xp >25:
+                self.damage = 40
+            elif self.xp > 50:
+                self.damage = 60
+            elif self.xp > 75:
+                self.damage = 100
+            elif self.xp > 100:
+                self.damage = 170
+        if self.specialty == 'Archer':
+            if self.xp >25:
+                self.damage = 30
+            elif self.xp > 50:
+                self.damage = 50
+            elif self.xp > 75:
+                self.damage = 80
+            elif self.xp > 100:
+                self.damage = 130
+            elif self.xp > 125:
+                self.damage = 170
+        if self.specialty == 'Swordsman':
+            if self.xp <= 25:
+                self.damage = 5
+            elif self.xp >25:
+                self.damage = 20
+            elif self.xp > 50:
+                self.damage = 40
+            elif self.xp > 75:
+                self.damage = 70
+            elif self.xp > 100:
+                self.damage = 120
+            elif self.xp > 125:
+                self.damage = 160
+            elif self.xp > 150:
+                self.damage = 180
 
     def FightSequence(self):
         global BattleFoe
@@ -131,8 +171,8 @@ class Battle:
             fight_decision = input(":")
 
             if fight_decision == 'f':
+                self.DamageXP()
                 self.CalculateDamage()
-                BattleFoe.CalculateDamage()
                 self.SetNewHealth(foe_damage_inflicted)
                 BattleFoe.SetNewHealth(player_damage_inflicted)
                 if self.health > 0 and BattleFoe.health > 0:
@@ -141,6 +181,7 @@ class Battle:
                     print(f"Congratulations! You killed the enemy {BattleFoe.name}! You have gained some experience!")
                     self.Win()
                     self.HealthXP()
+                    self.DamageXP()
                     self.ResetHealth()
                     self.ChooseEnemy()
                 elif self.health <= 0 and BattleFoe.health <= 0:
